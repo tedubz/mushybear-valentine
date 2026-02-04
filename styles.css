@@ -1,0 +1,83 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+/* Background video */
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+/* Dark overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Card */
+.card {
+  background: white;
+  padding: 36px 30px;
+  border-radius: 12px;
+  text-align: center;
+  width: 92%;
+  max-width: 420px;
+}
+
+.card h1 {
+  color: #d62828;
+  margin-bottom: 12px;
+}
+
+.card h2 {
+  margin-bottom: 20px;
+}
+
+/* Buttons */
+.buttons {
+  position: relative;
+  height: auto;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 12px;
+}
+
+button {
+  padding: 14px 26px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#yesButton {
+  background: #e63946;
+  color: white;
+  min-width: 120px;
+}
+
+#noButton {
+  background: #ccc;
+  min-width: 120px;
+  position: relative;
+  right: auto;
+}
