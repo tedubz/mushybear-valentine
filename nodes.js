@@ -72,8 +72,16 @@ function enableAudio() {
     const playPromise = audio.play();
     if (playPromise !== undefined) {
       playPromise
-        .then(() => logStatus('Audio playing successfully'))
-        .catch(err => logStatus('Audio play error: ' + err));
+        .then(() => {
+          logStatus('Audio playing successfully');
+          document.getElementById('unmuteBtn')?.style.display = 'none';
+        })
+        .catch(err => {
+          logStatus('Audio play error: ' + err);
+          // Show unmute button if autoplay fails
+          const btn = document.getElementById('unmuteBtn');
+          if (btn) btn.style.display = 'block';
+        });
     }
   }
 }
@@ -82,16 +90,41 @@ function enableAudio() {
 document.addEventListener('click', enableAudio, { once: true });
 document.addEventListener('touchstart', enableAudio, { once: true });
 
-// Also try to play on load
-window.addEventListener('load', () => {
-  setTimeout(() => {
+// Create unmute button
+setTimeout(() => {
+  const unmuteBtn = document.createElement('button');
+  unmuteBtn.id = 'unmuteBtn';
+  unmuteBtn.textContent = '🔊 Unmute Music';
+  unmuteBtn.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+    padding: 10px 15px;
+    background: rgba(255, 105, 180, 0.9);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  `;
+  
+  unmuteBtn.addEventListener('click', () => {
     const audio = document.getElementById('bgAudio');
     if (audio) {
       audio.muted = false;
       audio.volume = 0.5;
+      audio.play().then(() => {
+        logStatus('Audio started via button');
+        unmuteBtn.style.display = 'none';
+      }).catch(err => logStatus('Button play failed: ' + err));
     }
-  }, 1000);
-});
+  });
+  
+  document.body.appendChild(unmuteBtn);
+}, 500);
 
 // Image cycling for backgrounds
 const bgImages = ['background1.jpg', 'background2.jpg'];
