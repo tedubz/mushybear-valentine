@@ -30,6 +30,8 @@ function startFloatingEmojis() {
   if (!animationsActive) return;
   
   const emojiContainer = document.getElementById('emojiContainer');
+  if (!emojiContainer) return;
+  
   setInterval(() => {
     if (!animationsActive) return;
     
@@ -49,6 +51,8 @@ function startLovePhrases() {
   if (!animationsActive) return;
   
   const phraseContainer = document.getElementById('phraseContainer');
+  if (!phraseContainer) return;
+  
   setInterval(() => {
     if (!animationsActive) return;
     
@@ -61,6 +65,19 @@ function startLovePhrases() {
     setTimeout(() => phrase.remove(), 4500);
   }, 3000);
 }
+
+// Enable audio on user interaction (mobile requirement)
+function enableAudio() {
+  const audio = document.getElementById('bgAudio');
+  if (audio) {
+    audio.muted = false;
+    audio.play().catch(err => logStatus('Audio play failed: ' + err));
+  }
+}
+
+// Add click listener to enable audio
+document.addEventListener('click', enableAudio, { once: true });
+document.addEventListener('touchstart', enableAudio, { once: true });
 
 // Image cycling for backgrounds
 const bgImages = ['background1.jpg', 'background2.jpg'];
@@ -85,8 +102,12 @@ function startImageCycle() {
 
 // Start cycling on page load
 startImageCycle();
-startFloatingEmojis();
-startLovePhrases();
+
+// Delay animations start slightly to ensure DOM is ready
+setTimeout(() => {
+  startFloatingEmojis();
+  startLovePhrases();
+}, 500);
 
 const noButton = document.getElementById("noButton");
 const yesButton = document.getElementById("yesButton");
