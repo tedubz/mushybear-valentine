@@ -70,14 +70,33 @@ function startLovePhrases() {
 function enableAudio() {
   const audio = document.getElementById('bgAudio');
   if (audio) {
+    logStatus('Enabling audio...');
     audio.muted = false;
-    audio.play().catch(err => logStatus('Audio play failed: ' + err));
+    audio.volume = 0.5;
+    
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => logStatus('Audio playing successfully'))
+        .catch(err => logStatus('Audio play error: ' + err));
+    }
   }
 }
 
-// Add click listener to enable audio
+// Add click listener to enable audio (mobile requirement)
 document.addEventListener('click', enableAudio, { once: true });
 document.addEventListener('touchstart', enableAudio, { once: true });
+
+// Also try to play on load
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const audio = document.getElementById('bgAudio');
+    if (audio) {
+      audio.muted = false;
+      audio.volume = 0.5;
+    }
+  }, 1000);
+});
 
 // Image cycling for backgrounds
 const bgImages = ['background1.jpg', 'background2.jpg'];
