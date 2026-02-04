@@ -13,6 +13,7 @@
       background-repeat: no-repeat;
       background-attachment: fixed;
       transition: background-image 0.5s ease-in-out;
+      overflow: hidden;
     }
 
     /* Ensure overlay sits above the background */
@@ -20,12 +21,67 @@
       position: relative;
       z-index: 2;
     }
+
+    /* Floating emojis */
+    .floating-emoji {
+      position: fixed;
+      font-size: 2em;
+      pointer-events: none;
+      z-index: 1;
+      animation: float 6s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) translateX(100px);
+        opacity: 0;
+      }
+    }
+
+    /* Love phrases */
+    .love-phrase {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.5em;
+      font-weight: bold;
+      color: rgba(255, 105, 180, 0.8);
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+      pointer-events: none;
+      z-index: 1;
+      animation: fadeInOut 4s ease-in-out;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { opacity: 0; }
+    }
   </style>
 </head>
 <body>
+  <!-- Background audio -->
+  <audio id="bgAudio" autoplay loop>
+    <source src="background-music.mp3" type="audio/mpeg">
+  </audio>
 
+  <!-- Container for floating emojis -->
+  <div id="emojiContainer"></div>
 
-
+  <!-- Container for love phrases -->
+  <div id="phraseContainer"></div>
   <!-- Overlay Content -->
   <div class="overlay" style="z-index: 2;">
     <div class="card" style="z-index: 3;">

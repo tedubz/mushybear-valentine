@@ -6,6 +6,62 @@ function logStatus(msg) {
   }
 }
 
+// Love phrases array
+const lovePhrases = [
+  'I choose you, everyday',
+  'Forever and ever',
+  'You make me smile',
+  'I love you so much',
+  'You\'re my everything',
+  'Always and forever',
+  'My heart is yours',
+  'You complete me',
+  'I\'m crazy about you',
+  'Together forever'
+];
+
+// Love emojis
+const loveEmojis = ['❤️', '💖', '💕', '💗', '💓', '💞', '✨', '🌹'];
+
+let animationsActive = true;
+
+// Start floating emojis
+function startFloatingEmojis() {
+  if (!animationsActive) return;
+  
+  const emojiContainer = document.getElementById('emojiContainer');
+  setInterval(() => {
+    if (!animationsActive) return;
+    
+    const emoji = document.createElement('div');
+    emoji.className = 'floating-emoji';
+    emoji.textContent = loveEmojis[Math.floor(Math.random() * loveEmojis.length)];
+    emoji.style.left = Math.random() * 100 + '%';
+    emoji.style.animationDuration = (4 + Math.random() * 3) + 's';
+    
+    emojiContainer.appendChild(emoji);
+    setTimeout(() => emoji.remove(), 9000);
+  }, 800);
+}
+
+// Start love phrases
+function startLovePhrases() {
+  if (!animationsActive) return;
+  
+  const phraseContainer = document.getElementById('phraseContainer');
+  setInterval(() => {
+    if (!animationsActive) return;
+    
+    const phrase = document.createElement('div');
+    phrase.className = 'love-phrase';
+    phrase.textContent = lovePhrases[Math.floor(Math.random() * lovePhrases.length)];
+    phrase.style.color = ['rgba(255, 105, 180, 0.8)', 'rgba(220, 20, 60, 0.8)', 'rgba(255, 192, 203, 0.8)'][Math.floor(Math.random() * 3)];
+    
+    phraseContainer.appendChild(phrase);
+    setTimeout(() => phrase.remove(), 4500);
+  }, 3000);
+}
+
 // Image cycling for backgrounds
 const bgImages = ['background1.jpg', 'background2.jpg'];
 let currentImageIndex = 0;
@@ -29,10 +85,12 @@ function startImageCycle() {
 
 // Start cycling on page load
 startImageCycle();
+startFloatingEmojis();
+startLovePhrases();
 
 const noButton = document.getElementById("noButton");
 const yesButton = document.getElementById("yesButton");
-logStatus('java.js loaded — buttons present: ' + (!!noButton) + ', ' + (!!yesButton));
+logStatus('nodes.js loaded — buttons present: ' + (!!noButton) + ', ' + (!!yesButton));
 window._javaJsLoaded = true;
 
 // Defensive check: stop if buttons not found
@@ -68,8 +126,10 @@ if (!noButton || !yesButton) {
     if (imageInterval) clearInterval(imageInterval);
     setBackgroundImage('background3.jpg');
     
+    const originalHTML = document.body.innerHTML;
+    
     document.body.innerHTML = `
-      <div style="
+      <div id="finalMessage" style="
         background:rgba(0,0,0,0.6);
         color:white;
         height:100vh;
@@ -80,18 +140,25 @@ if (!noButton || !yesButton) {
         text-align:center;
         font-size:22px;
         padding:20px;
+        z-index: 10;
+        position: relative;
       ">
         <h1>Thank you 💖</h1>
         <p>Thank you 💖 Thank you 💖 Thank you 💖</p>
         <p>Thank you 💖 Thank you 💖 Thank you 💖</p>
         <h2 style="margin-top:20px;">I love you Mushybear ❤️</h2>
       </div>
+      <div id="emojiContainer"></div>
+      <div id="phraseContainer"></div>
     `;
+    
+    startFloatingEmojis();
+    startLovePhrases();
 
     // Navigate to WhatsApp using location.href (less likely to be blocked)
     setTimeout(() => {
       window.location.href = "https://wa.me/qr/M3GCI7F2OKMOF1";
-    }, 1000);
+    }, 3000);
   });
 }
 
