@@ -10,14 +10,9 @@ function logStatus(msg) {
 const lovePhrases = [
   'I choose you, everyday',
   'Forever and ever',
-  'You make me smile',
-  'I love you so much',
-  'You\'re my everything',
-  'Always and forever',
-  'My heart is yours',
   'You complete me',
-  'I\'m crazy about you',
-  'Together forever'
+  'if we perish we perish',
+  'if we die we die'
 ];
 
 // Love emojis
